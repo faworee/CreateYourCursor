@@ -925,13 +925,18 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const shapeSize = size - borderThickness;
             const imgAspect = uploadedImage.width / uploadedImage.height;
-            let imgWidth = shapeSize;
-            let imgHeight = shapeSize;
+            const shapeAspect = 1; // shapes are square
             
-            if (imgAspect > 1) {
-                imgHeight = shapeSize / imgAspect;
+            // Use "cover" behavior - fill the entire shape
+            let imgWidth, imgHeight;
+            if (imgAspect > shapeAspect) {
+                // Image is wider - fit to height
+                imgHeight = shapeSize;
+                imgWidth = imgHeight * imgAspect;
             } else {
-                imgWidth = shapeSize * imgAspect;
+                // Image is taller - fit to width
+                imgWidth = shapeSize;
+                imgHeight = imgWidth / imgAspect;
             }
             
             const scaledWidth = imgWidth * imageScale;
@@ -1175,10 +1180,11 @@ document.addEventListener('DOMContentLoaded', () => {
         tempCanvas.height = exportSize;
         const tempCtx = tempCanvas.getContext('2d');
         
-        const center = { x: tempCanvas.width / 2, y: tempCanvas.height / 2 };
+        const center = { x: tempCanvas.width / 2, y: tempCanvas. height / 2 };
         const scaleFactor = exportSize / 400;
-        const size = 300 * scaleFactor;
+        const size = exportSize * 0.95;
         const scaledBorderThickness = borderThickness * scaleFactor;
+        const glowSize = document.getElementById('addGlow').checked ? scaledBorderThickness * 2 * glowAmount : 0;
         
         const fillPath = new Path2D();
         drawShape(fillPath, center, size - scaledBorderThickness);
