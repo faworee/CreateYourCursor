@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>custom cursor creator</title>
+    <link rel="stylesheet" href="cursorstyles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>custom cursor creator</h1>
+        <p class="subtitle">design cursors for rhythm games</p>
+        
+        <div class="main-grid">
+            <div class="section preview-section">
+                <div class="section-title">preview</div>
+                <div class="canvas-container">
+                    <canvas id="cursorCanvas" width="400" height="400"></canvas>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">shape</div>
+                <div class="shape-grid">
+                    <button class="shape-button selected" data-shape="squircle">squircle</button>
+                    <button class="shape-button" data-shape="circle">circle</button>
+                    <button class="shape-button" data-shape="square">square</button>
+                    <button class="shape-button" data-shape="triangle">triangle</button>
+                    <button class="shape-button" data-shape="star">star</button>
+                    <button class="shape-button" data-shape="hexagon">hexagon</button>
+                    <button class="shape-button" data-shape="heart">heart</button>
+                    <button class="shape-button" data-shape="diamond">diamond</button>
+                    <button class="shape-button" data-shape="pentagon">pentagon</button>
+                    <button class="shape-button" data-shape="trapezoid">trapezoid</button>
+                </div>
+                <div id="squircle-options" class="control-group hidden">
+                    <div class="control-row">
+                        <label class="control-label">roundness</label>
+                        <input type="number" id="squircleRoundnessInput" class="input-field" min="2" max="10" step="0.1" value="4.0">
+                    </div>
+                    <input type="range" id="squircleRoundness" min="2" max="10" value="4" step="0.1">
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">fill</div>
+                <div class="controls-container">
+                    <div class="toggle-row">
+                        <label class="control-label">use solid fill</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useSolidFill" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row">
+                        <label class="control-label">use gradient</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useGradientFill">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div id="useOutlineGradientFillOption" class="toggle-row hidden">
+                        <label class="control-label">use outline gradient</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useOutlineGradientFill">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row hidden" id="smoothFillContainer">
+                        <label class="control-label">smooth gradient</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useSmoothFillGradient" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div id="solid-fill-options">
+                        <div class="control-row" id="solidFillColorContainer">
+                            <label class="control-label">color</label>
+                            <input type="color" id="solidFillColor" value="#ffffff">
+                        </div>
+                        <div class="control-group">
+                            <div class="control-row">
+                                <label class="control-label">opacity</label>
+                                <input type="number" id="fillOpacityInput" class="input-field" min="0" max="1" step="0.01" value="1.00">
+                            </div>
+                            <input type="range" id="fillOpacity" min="0" max="1" value="1" step="0.01">
+                        </div>
+                        <div id="gradient-fill-options" class="control-group hidden">
+                            <div id="gradient-fill-colors" class="gradient-colors-container"></div>
+                            <button id="addFillColor" class="btn-secondary full-width">add color</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">outline</div>
+                <div class="controls-container">
+                    <div class="toggle-row">
+                        <label class="control-label">use gradient</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useGradientOutline">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div id="useFillGradientOutlineOption" class="toggle-row hidden">
+                        <label class="control-label">use fill gradient</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useFillGradientOutline">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="toggle-row hidden" id="smoothOutlineContainer">
+                        <label class="control-label">smooth gradient</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="useSmoothOutlineGradient" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div id="solid-outline-options">
+                        <div class="control-row">
+                            <label class="control-label">color</label>
+                            <input type="color" id="outlineColor" value="#4299e1">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label class="control-label">opacity</label>
+                            <input type="number" id="outlineOpacityInput" class="input-field" min="0" max="1" step="0.01" value="1.00">
+                        </div>
+                        <input type="range" id="outlineOpacity" min="0" max="1" value="1" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label class="control-label">thickness</label>
+                            <input type="number" id="borderThicknessInput" class="input-field" min="0" max="50" value="10">
+                        </div>
+                        <input type="range" id="borderThickness" min="0" max="50" value="10">
+                    </div>
+                    <div id="gradient-outline-options" class="control-group hidden">
+                        <div id="gradient-outline-colors" class="gradient-colors-container"></div>
+                        <button id="addOutlineColor" class="btn-secondary full-width">add color</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">glow</div>
+                <div class="controls-container">
+                    <div class="toggle-row">
+                        <label class="control-label">add glow</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="addGlow">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div id="glow-options" class="controls-container hidden">
+                        <div class="toggle-row">
+                            <label class="control-label">use outline color</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="useOutlineGlow">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div id="separate-glow-options">
+                            <div id="glow-color-option" class="control-row">
+                                <label class="control-label">color</label>
+                                <input type="color" id="glowColorInput" value="#4299e1">
+                            </div>
+                            <div class="control-group">
+                                <div class="control-row">
+                                    <label class="control-label">amount</label>
+                                    <input type="number" id="glowAmountInput" class="input-field" min="0" max="1" step="0.01" value="0.50">
+                                </div>
+                                <input type="range" id="glowAmount" min="0" max="1" value="0.5" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">image</div>
+                <div class="file-input">
+                    <input type="file" id="imageUpload" accept="image/*">
+                    <label for="imageUpload" class="file-input-label">choose image</label>
+                </div>
+                <div id="image-options" class="controls-container hidden">
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label class="control-label">scale</label>
+                            <input type="number" id="imageScaleInput" class="input-field" min="0.01" max="2" step="0.01" value="1.00">
+                        </div>
+                        <input type="range" id="imageScale" min="0.01" max="2" value="1" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label class="control-label">opacity</label>
+                            <input type="number" id="imageOpacityInput" class="input-field" min="0" max="1" step="0.01" value="1.00">
+                        </div>
+                        <input type="range" id="imageOpacity" min="0" max="1" value="1" step="0.01">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-row">
+                            <label class="control-label">rotation</label>
+                            <input type="number" id="imageRotationInput" class="input-field" min="0" max="360" value="0">
+                        </div>
+                        <input type="range" id="imageRotation" min="0" max="360" value="0">
+                    </div>
+                    <div class="position-controls">
+                        <div class="control-group">
+                            <div class="control-row">
+                                <label class="control-label">position x</label>
+                                <input type="number" id="imageOffsetXInput" class="input-field" min="-100" max="100" value="0">
+                            </div>
+                            <input type="range" id="imageOffsetX" min="-100" max="100" value="0">
+                        </div>
+                        <div class="control-group">
+                            <div class="control-row">
+                                <label class="control-label">position y</label>
+                                <input type="number" id="imageOffsetYInput" class="input-field" min="-100" max="100" value="0">
+                            </div>
+                            <input type="range" id="imageOffsetY" min="-100" max="100" value="0">
+                        </div>
+                    </div>
+                    <button id="removeImageBtn" class="btn-danger full-width">remove image</button>
+                </div>
+            </div>
+
+            <div class="section download-section">
+                <div class="download-container">
+                    <div class="section-title">download</div>
+                    <div class="controls-container">
+                        <div class="control-group">
+                            <label class="control-label">export size</label>
+                            <select id="exportSize" class="select-field">
+                                <option value="512">512x512</option>
+                                <option value="1024">1024x1024</option>
+                                <option value="2048" selected>2048x2048</option>
+                                <option value="4096">4096x4096</option>
+                            </select>
+                        </div>
+                        <button id="downloadBtn" class="btn-primary full-width">download png</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="cursor2.js"></script>
+</body>
+</html>
